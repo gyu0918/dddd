@@ -6,7 +6,7 @@
 #    By: junggkim <junggkim@student.42seoul.>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/24 15:54:34 by junggkim          #+#    #+#              #
-#    Updated: 2022/11/27 19:58:17 by junggkim         ###   ########.fr        #
+#    Updated: 2022/11/28 19:15:50 by junggkim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME	= libftprintf.a
@@ -17,7 +17,7 @@ OBJS	= $(SRCS:%.c=%.o)
 
 FLAGS	= -Wall -Wextra -Werror
 
-CC		= gcc
+CC		= cc
 
 all		:	$(NAME)
 
@@ -33,6 +33,7 @@ clean   :
 fclean  :   clean
 	rm -f $(NAME)
 
-re  :   fclean all
-
+re  :   
+	$(MAKE) fclean 
+	$(MAKE) all
 .PHONY  :   all clean fclean re
