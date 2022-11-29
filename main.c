@@ -1,14 +1,9 @@
-#include <stdio.h>
 #include "ft_printf.h"
+#include <stdio.h>
 
 int	main(void)
 {
-	char	*a;
-
-	printf("%");
+	printf("%d",214845454555);
 	printf("\n");
-	//printf("%p",a);
-//	printf("\n-----");
-	ft_printf("%");
-
+	ft_printf("ab%y12");
 }

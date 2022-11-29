@@ -6,7 +6,7 @@
 #    By: junggkim <junggkim@student.42seoul.>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/24 15:54:34 by junggkim          #+#    #+#              #
-#    Updated: 2022/11/28 19:15:50 by junggkim         ###   ########.fr        #
+#    Updated: 2022/11/29 19:30:26 by junggkim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 NAME	= libftprintf.a

@@ -6,7 +6,7 @@
 /*   By: junggkim <junggkim@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 17:45:57 by junggkim          #+#    #+#             */
-/*   Updated: 2022/11/27 20:38:25 by junggkim         ###   ########.fr       */
+/*   Updated: 2022/11/29 19:59:58 by junggkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -36,6 +36,8 @@ void	print_conversion(const char *format, va_list ap, int *len)
 		write(1, "%", 1);
 		(*len) += 1;
 	}
+	else
+		write(1, format, 1);
 }
 
 void	check_format(const char *format, va_list ap, int *len)
@@ -46,13 +48,14 @@ void	check_format(const char *format, va_list ap, int *len)
 		{
 			format++;
 			print_conversion(format, ap, len);
+			format++;
 		}
 		else
 		{
 			write(1, format, 1);
 			(*len) += 1;
+			format++;
 		}
-		format++;
 	}
 }
 
