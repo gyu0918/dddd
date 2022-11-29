@@ -5,35 +5,86 @@
 #                                                     +:+ +:+         +:+      #
 #    By: junggkim <junggkim@student.42seoul.>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/11/24 15:54:34 by junggkim          #+#    #+#              #
-#    Updated: 2022/11/29 19:30:26 by junggkim         ###   ########.fr        #
+#    Created: 2022/11/17 20:38:03 by junggkim          #+#    #+#              #
+#    Updated: 2022/11/27 15:02:29 by junggkim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-NAME	= libftprintf.a
+NAME					= libft.a
 
-SRCS	= ft_printf.c ft_print_conversion.c ft_putstr.c
+SRCS					= ft_atoi.c \
+					  ft_bzero.c \
+					  ft_calloc.c \
+					  ft_isalnum.c \
+					  ft_isalpha.c \
+					  ft_isascii.c \
+					  ft_isdigit.c \
+					  ft_isprint.c \
+					  ft_itoa.c \
+					  ft_memchr.c \
+					  ft_memcmp.c \
+					  ft_memcpy.c \
+					  ft_memmove.c \
+					  ft_memset.c \
+					  ft_putchar_fd.c \
+					  ft_putendl_fd.c \
+					  ft_putnbr_fd.c \
+					  ft_putstr_fd.c \
+					  ft_split.c \
+					  ft_strchr.c \
+					  ft_strdup.c \
+					  ft_strjoin.c \
+					  ft_strlcat.c \
+					  ft_strlcpy.c \
+					  ft_strlen.c \
+					  ft_strmapi.c \
+					  ft_strncmp.c \
+					  ft_strnstr.c \
+					  ft_strrchr.c \
+					  ft_strtrim.c \
+					  ft_substr.c \
+					  ft_tolower.c \
+					  ft_toupper.c \
+					  ft_striteri.c 
 
-OBJS	= $(SRCS:%.c=%.o)
+BONUS_SRCS				= ft_lstsize_bonus.c \
+					  ft_lstnew_bonus.c \
+					  ft_lstadd_back_bonus.c \
+					  ft_lstadd_front_bonus.c \
+					  ft_lstclear_bonus.c \
+					  ft_lstdelone_bonus.c \
+					  ft_lstiter_bonus.c \
+					  ft_lstlast_bonus.c \
+					  ft_lstmap_bonus.c 
 
-FLAGS	= -Wall -Wextra -Werror
+OBJS					= $(SRCS:%.c=%.o)
 
-CC		= cc
+BONUS_OBJS				= $(BONUS_SRCS:%.c=%.o)
 
-all		:	$(NAME)
+FLAGS					= -Wall -Wextra -Werror
 
-$(NAME)	:	$(OBJS)
-	ar	rcs	$(NAME) $(OBJS)
+ifdef WITH_BONUS
+	OBJ_FILES = $(OBJS) $(BONUS_OBJS)
+else
+	OBJ_FILES = $(OBJS)
+endif
 
-%.o		:	%.c
-	$(CC) $(FLAGS) -c -o $@ $^ -I./
+all	:	$(NAME)
 
-clean   :
-	rm -f $(OBJS)
+$(NAME)		:	$(OBJ_FILES)
+			ar rcs $(NAME) $(OBJ_FILES)
 
-fclean  :   clean
-	rm -f $(NAME)
+%.o			: %.c
+	gcc $(FLAGS) -c -o $@ $^ -I./
 
-re  :   
-	$(MAKE) fclean 
-	$(MAKE) all
-.PHONY  :   all clean fclean re
+bonus :
+	make WITH_BONUS=1 all
+
+clean	:
+		rm -f $(OBJS) $(BONUS_OBJS)
+
+fclean	:	clean
+		rm -f $(NAME)
+
+re	:	fclean all
+
+.PHONY	:	all clean fclean re bonus
