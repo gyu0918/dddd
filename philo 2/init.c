@@ -6,7 +6,7 @@
 /*   By: junggkim <junggkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:49:27 by junggkim          #+#    #+#             */
-/*   Updated: 2023/06/15 04:59:16 by junggkim         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:12:33 by junggkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int mutex_init(t_check *check)
         if (pthread_mutex_init(&(check->forks[i]), NULL))
             return (1);
     }
+    if (phread_mutex_init(mutext머시기))
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: junggkim <junggkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 20:19:44 by junggkim          #+#    #+#             */
-/*   Updated: 2023/06/15 05:03:12 by junggkim         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:21:50 by junggkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,24 @@ int check_eat_count(t_philo *philo, t_check *check)
     return (result);
 }
 
-void    change_die(t_philo *philo)
+/*void    change_die(t_philo *philo)
 {
     pthread_mutex_lock(&philo->check->die_check);
     philo->check->die = 1;
     pthread_mutex_unlock(&philo->check->die_check);
-}
+}*/
 
 int die_check(t_philo *philo)    
 {
+    int tmp;
+
 	pthread_mutex_lock(&philo->check->die_check);
-	if (philo->check->die == 1)
-	{
-		pthread_mutex_unlock(&philo->check->die_check);
+	tmp = philo->check->die;
+    pthread_mutex_unlock(&philo->check->die_check);
+    if (tmp == 1)
 		return (1);
-	}
 	else
-	{
-		pthread_mutex_unlock(&philo->check->die_check);
 		return (0);
-	}
 }
 
 void    pass_time(t_philo *philo, int wait_time)
@@ -74,13 +72,10 @@ void    ft_finish_check(t_philo *philo, t_check *check)
 	int     i;
 	long    now;
     
-	while (!die_check(philo))
+	while (!check->die)
 	{
         if (check->eat_count != 0 && check_eat_count(philo, check) == check->eat_count)
-		{
-			change_die(philo);
 			break ;
-		}
         i = -1;
         while (++i < check->number_of_philosophers)
         {
@@ -88,7 +83,9 @@ void    ft_finish_check(t_philo *philo, t_check *check)
             //printf("%ld ddd%d\n", now - philo[i].last_eat_time,check->time_to_die);
 			if ((now - philo[i].last_eat_time) >= check->time_to_die)
 			{
-                change_die(philo);
+                pthread_mutex_lock(&check->die_check);
+                check->die = 1;
+                pthread_mutex_unlock(&check->die_check);
                 printf_mutex(philo, i + 1, "died");
 				break ;
 			}
@@ -110,9 +107,7 @@ void    *ft_thread(void *ss)
         pthread_mutex_lock(&(philo->check->forks[philo->right_fork]));
         printf_mutex(philo, philo->num, "has taken a fork");
         printf_mutex(philo, philo->num, "is eating");
-        pthread_mutex_lock(&philo->check->last_eat_time);
         philo->last_eat_time = ft_get_time();
-        pthread_mutex_unlock(&philo->check->last_eat_time);
         philo->eaten_num++;
         pass_time(philo, philo->check->time_to_eat);
         pthread_mutex_unlock(&(philo->check->forks[philo->right_fork]));

@@ -6,7 +6,7 @@
 /*   By: junggkim <junggkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:55:28 by junggkim          #+#    #+#             */
-/*   Updated: 2023/06/15 02:25:40 by junggkim         ###   ########.fr       */
+/*   Updated: 2023/06/20 17:07:38 by junggkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void    ft_finish_check(t_philo *philo, t_check *check);
 void    pass_time(t_philo *philo, int wait_time);
 void    printf_mutex(t_philo *philo, int num, char *str);
 int     die_check(t_philo *philo);
-void    change_die(t_philo *philo);
+//void    change_die(t_philo *philo);
 int     check_eat_count(t_philo *philo, t_check *check);
 int     hard_coding(t_philo *philo);
 
