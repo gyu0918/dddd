@@ -6,7 +6,7 @@
 /*   By: junggkim <junggkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 15:49:27 by junggkim          #+#    #+#             */
-/*   Updated: 2023/06/20 21:12:33 by junggkim         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:58:40 by junggkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int philo_init(t_philo **philo, t_check *check)
     *philo = malloc(sizeof(t_philo) * check->number_of_philosophers);
     if (!philo)
         return (1);
-    printf("%d\n", check->number_of_philosophers);
     i = 0;
     while (i < check->number_of_philosophers)
     {
@@ -78,6 +77,13 @@ int mutex_init(t_check *check)
         if (pthread_mutex_init(&(check->forks[i]), NULL))
             return (1);
     }
-    if (phread_mutex_init(mutext머시기))
+    if (pthread_mutex_init(&check->last_eat_time, NULL))
+        return (1);
+    if (pthread_mutex_init(&check->die_check, NULL))
+        return (1);
+    if (pthread_mutex_init(&check->print, NULL))
+        return (1);
+    if (pthread_mutex_init(&check->eaten_num, NULL))
+        return (1);
     return (0);
 }

@@ -12,13 +12,21 @@
 
 #include "philosophers.h"
 
+int hard_coding(t_philo *philo)
+{
+    printf("%ld 1 has taken a fork\n", philo[0].start_thread_time - ft_get_time());
+    pass_time(philo, philo->check->time_to_die);
+    printf("%ld 1 died\n", ft_get_time() - philo[0].start_thread_time);
+    return (0);
+}
+
 void    printf_mutex(t_philo *philo, int num, char *str)
 {
     long now_time;
     
     now_time = ft_get_time();   
     pthread_mutex_lock(&(philo->check->print));
-    if (!philo->check->die)
+    if (!die_check(philo))
         printf("%ld %d %s\n", now_time - philo->start_thread_time, num, str);
     pthread_mutex_unlock(&(philo->check->print));
 }
@@ -60,21 +68,8 @@ int	ft_error(char *str)
 
 void	free_all(t_philo **philo, t_check *check)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < check->number_of_philosophers)
-	{
-		free(philo[i]);
-		i++;
-	}
-	philo = NULL;
-	j = 0;
-	while (j < i)
-	{
-		free(&(check->forks[j]));
-		j++;
-	}
+	free(check->forks);
 	check = NULL;
+	free(*philo);
+	philo = NULL;
 }

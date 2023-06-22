@@ -23,7 +23,8 @@ ARFLAGS = -rcs
 SRCS = ./init.c \
 		./philo.c \
 		./start_eating.c \
-		./utils.c
+		./utils.c \
+		./utils2.c
 
 OBJS = $(SRCS:.c=.o)
 
