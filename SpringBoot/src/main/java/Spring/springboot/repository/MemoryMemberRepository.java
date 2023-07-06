@@ -20,15 +20,19 @@ public class MemoryMemberRepository implements MemberRepository{
         return Optional.ofNullable(store.get(id));                  //null이 반환될경우도 있기 때문에 Optional을 감싸서 사용한다.
     }
 
-    /*@Override
+    @Override
     public Optional<Member> findByName(String name) {
         return store.values().stream()                                          //java while문법
                 .filter(member -> member.getName().equals(name))
                 .findAny();
-    }*/
+    }
 
     @Override
     public List<Member> findAll() {
         return new ArrayList<>(store.values());                             //java 실무에서는 List많이 쓴다.
+    }
+
+    public void clearStore(){
+        store.clear();
     }
 }
