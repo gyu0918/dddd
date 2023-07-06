@@ -1,6 +1,8 @@
 package Spring.springboot.repository;
 
 import Spring.springboot.domain.Member;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
