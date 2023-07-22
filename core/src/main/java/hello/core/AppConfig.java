@@ -17,16 +17,20 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
     @Bean
     public MemberService memberService(){
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());    //생성자 주입이라고 한다
                                                                        //DI(Dependency Injection)의존관계 주입
     }
     @Bean
-    public static MemoryMemberRepository memberRepository() {      // 어떤역할 하는지 한눈에 알아차리게 할려고 만든것
+    public  MemoryMemberRepository memberRepository() {      // 어떤역할 하는지 한눈에 알아차리게 할려고 만든것
+        //여기서 public static MemoryMemberRepository memberRepository() 로 static 처리를 하면 객체마다 다른값이 나온다 싱글톤 x
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     public OrderService orderService(){
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), new FixDiscountPolicy());
     }
 
