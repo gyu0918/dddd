@@ -26,6 +26,7 @@ public class OrderServiceImpl implements OrderService{
 
 
     //수정자 주입! 이떄 필드에 final 이 없어야 한다. 또한 수정자 주입을 하게 된다면 밑에 있는 생성자 주입은 할 필요가 없다.
+/*
     @Autowired//선택적으로 의존성을 주입하거나 주입하지 않거나 컨트롤 할수 있다
     public void setMemberRepository(MemberRepository memberRepository){
         this.memberRepository = memberRepository;
@@ -34,6 +35,7 @@ public class OrderServiceImpl implements OrderService{
     public void setDiscountPolicy (DiscountPolicy discountPolicy) {
         this.discountPolicy = discountPolicy;
     }
+*/
 
     //<생성자 주입>
     //스프링컨테이너에서 빈이 등록이 되고 각 빈마다 의존관계들이 주입이 된다. 이 2가지 과정을 거친다.
