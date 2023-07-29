@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService{
 
     //<생성자 주입>
     //스프링컨테이너에서 빈이 등록이 되고 각 빈마다 의존관계들이 주입이 된다. 이 2가지 과정을 거친다.
+    //생성자 주입을 하게 되면 final 을 사용할수 있다.
     @Autowired                  //생성자가 1개 밖에 없을 경우는 @Autowired를 설정하지 않아도 자동으로 생성자주입이 된다.
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
