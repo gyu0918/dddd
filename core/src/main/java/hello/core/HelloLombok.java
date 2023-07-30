@@ -1,4 +1,5 @@
-/*package hello.core;
+package hello.core;
+
 
 @Getter
 @Setter
@@ -10,4 +11,5 @@ public class HelloLombok {
         HelloLombok helloLombok = new HelloLombok();
         helloLombok.set
     }
-}*/
+}
+
