@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -42,7 +43,7 @@ public class LoginController {
         //로그인 성공 처리 TODO
         return "redirect:/";
     }
-    @PostMapping("/login")
+    //@PostMapping("/login")
     public String loginV2(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletResponse response){
         if (bindingResult.hasErrors()){
             return "login/loginForm";
@@ -61,17 +62,46 @@ public class LoginController {
         return "redirect:/";
     }
 
+    @PostMapping("/login")
+    public String loginV3(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult, HttpServletRequest request){
+        if (bindingResult == null)
+            return "login/loginForm";
+        Member loginMember = loginService.login(form.getLoginId(), form.getPassword());
+        log.info("login? {}", loginMember);
+        if (loginMember == null){
+            bindingResult.reject("loginForm", "아이디 또는 비번이 잘못되었습니다");
+            return "login/loginForm";
+        }
+        //로그인 성공 처리
+        //세션 있으면 세션 반환, 없으면 세션 신규 생성
+        HttpSession session = request.getSession();
+        //세션에 로그인 회원 정보 보관
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
+        return "redirect:/";
+    }
+
     //@PostMapping("/logout")
     public String logout(HttpServletResponse response) {
         expireCookie(response, "memberId");
         return "redirect:/";
     }
 
-    @PostMapping("/logout")
+    //@PostMapping("/logout")
     public String logoutV2(HttpServletRequest request){
         sessionManager.expire(request);
         return "redirect:/";
     }
+
+    @PostMapping("/logout")
+    public String logoutV3(HttpServletRequest request){
+        //request.getSession(false) 이거면 세션 반환 하고 세션이 없다면 null 반환
+        HttpSession session = request.getSession(false);
+        if (session != null)
+            session.invalidate();   //세션 삭제
+        return "redirect:/";
+    }
+
     private void expireCookie(HttpServletResponse response, String cookieName) {
         Cookie cookie = new Cookie(cookieName, null);
         cookie.setMaxAge(0);
