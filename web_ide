@@ -1,0 +1,88 @@
+package com.roulette.roulette.myPage;
+
+
+import com.roulette.roulette.domain.Code;
+import com.roulette.roulette.domain.Member;
+import com.roulette.roulette.domain.Post;
+import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class MyPageService {
+    private MyMemberRepository myMemberRepository;
+    private MyPostRepository myPostRepository;
+    private MyCodeRepository myCodeRepository;
+
+
+    public MemberDTO getMemberDTO(Long memberId){
+        Member member =  myMemberRepository.findById(memberId).orElse(null);
+        if (member == null)
+            return null;
+        return new MemberDTO(member.getName(), member.getEmail());
+    }
+
+    //메일 부분 처리하
+//    public List<QuestionDTO> getQuestionDTO(){
+//        List<QuestionDTO> questionDTOs = new ArrayList<>();
+//        List<Post> questionList = myPostRepository.findAll();
+//
+//        for (Post post : questionList) {
+//            QuestionDTO questionDTO = new QuestionDTO();
+//
+//            questionDTO.setPostId(post.getPostId());
+//            questionDTO.setTitle("질문" + post.getPostId());
+//            questionDTO.setCreatedDate(post.getCreateTime());
+//            questionDTO.setImgSrc("127.0.0.1/img/img" + post.getPostId());
+//            //주의 questionDTOs이다. 리스트로 넣어두는과정
+//            questionDTOs.add(questionDTO);
+//        }
+//        return questionDTOs;
+//    }
+    public MyPageDTO getMyPageData(Long memberId) {
+        MyPageDTO myPageDTO = new MyPageDTO();
+
+        // 해당 memberId로 회원의 모든 질문을 가져와 설정
+        List<Post> postList = myPostRepository.findByMemberId(memberId);
+        List<PostDTO> postDTOList = new ArrayList<>();
+        for (Post post : postList) {
+            PostDTO postDTO = new PostDTO();
+            // 여기서 post.getMember().getEmail()을 사용하여 이메일 정보를 가져올 수 있음
+            postDTO.setEmail(post.getMember().getEmail());
+
+            postDTO.setPostId(post.getPostId());
+            postDTO.setTitle(post.getTitle());
+            postDTO.setCreatedTime(post.getCreateTime());
+            postDTO.setImgSrc("127.0.0.1/img/img" + post.getPostId());
+
+            postDTOList.add(postDTO);
+        }
+        myPageDTO.setPostList(postDTOList);
+
+        return myPageDTO;
+    }
+
+
+
+    public List<CodeDTO> getCodeDTO(){
+        List<CodeDTO> codeDTOs = new ArrayList<>();
+        List<Code> codeList = myCodeRepository.findAll();
+        for(Code code : codeList){
+            CodeDTO codeDTO = new CodeDTO();
+            codeDTO.setCodeURL(code.getCodeUrl());
+        }
+        return codeDTOs;
+    }
+
+
+
+
+
+
+
+}
+`
