@@ -2,34 +2,37 @@ package org.example;
 
 import java.util.*;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static int N, M;
     public static int[] arr;
+    public static boolean[] visit;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         N = sc.nextInt();
         M = sc.nextInt();
-        arr = new int[M];
-        dfs(1, 0);
 
+        arr = new int[M];
+        visit = new boolean[N];
+        dfs(N,M,0);
     }
-    public static void dfs(int at, int depth){
+
+    public static void dfs(int N, int M, int depth){
         if (depth == M){
-            for(int val : arr){
+            for (int val : arr) {
                 System.out.print(val + " ");
             }
             System.out.println();
             return ;
         }
 
-        for (int i = at; i <= N; i++){
-            arr[depth] = i;
-            dfs(i + 1, depth + 1);
+        for (int i = 0; i < N; i++){
+            if (!visit[i]){
+                visit[i] = true;
+                arr[depth] = i + 1;
+                dfs(N, M, depth + 1);
+                visit[i] = false;
+            }
         }
-
-
     }
 }
