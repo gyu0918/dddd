@@ -1,18 +1,16 @@
 package mapPractice.findMap;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class PharmacyController {
 
     private final PharmacyService pharmacyService;
-
-    public PharmacyController(PharmacyService pharmacyService) {
-        this.pharmacyService = pharmacyService;
-    }
 
     @GetMapping("/pharmacies")
     public List<Pharmacy> getPharmacies() {
