@@ -1,8 +1,11 @@
+#spring:
+#  devtools:
+#    livereload:
+#      enabled: true
+#    restart:
+#      enabled: false
+#  freemarker:
+#    cache: false
 spring:
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: false
-  freemarker:
-    cache: false
+  profiles:
+    active: local
